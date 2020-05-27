@@ -10,10 +10,13 @@ client = TelegramClient(username, api_id, api_hash)
 client.start()
 tz = pytz.timezone("Europe/Moscow")             # You can choose any zone. For example, you can use UTC (tz = pytz.UTC)
 delta = timedelta(hours=24)                     # For all message, older than 24 hours.
+counter_deleted_message = 0
 for dialog in client.iter_dialogs():
     try:
         for message in client.iter_messages(dialog.id, from_user='me'):
-            if (tz.localize(datetime.now()) - message.date.replace(tzinfo=tz)) > delta:
+            if (tz.localize(datetime.now()) - message.date.replace(tzinfo=tz)) > delta and message.raw_text is not None:
                 client.delete_messages(dialog.id, message)
+                counter_deleted_message += 1
     except Exception:
         pass
+print('Deleted {} post(s)'.format(counter_deleted_message))
