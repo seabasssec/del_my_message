@@ -4,7 +4,7 @@ import pytz
 # api_id and api_hash you must take from https://my.telegram.org/. Create your app (any) and get it.
 api_id =                                        # Your api_id in int format (for example, 1234567)
 api_hash =                                      # Your api_hash in str format (for example, 'deadbeef1337600613')
-username =                                      # Session name in str format (for example, your 'Anon')
+username =                                      # Session name in str format (for example, 'Anon')
 
 client = TelegramClient(username, api_id, api_hash)
 client.start()
