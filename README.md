@@ -2,5 +2,5 @@
 Deletes your messages from telegram.
 
 requirements:
-  telethone/n
-  pytz/n
+	telethone
+	pytz
