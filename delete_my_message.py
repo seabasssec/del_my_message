@@ -15,8 +15,12 @@ for dialog in client.iter_dialogs():
     try:
         for message in client.iter_messages(dialog.id, from_user='me'):
             if (tz.localize(datetime.now()) - message.date.replace(tzinfo=tz)) > delta and message.raw_text is not None:
-                client.delete_messages(dialog.id, message)
-                counter_deleted_message += 1
+                try:
+                    client.delete_messages(dialog.id, message)
+                    counter_deleted_message += 1
+                except errors.FloodWaitError as e:
+                    print('Have to sleep', e.seconds, 'seconds')
+                    time.sleep(e.seconds)    
     except Exception:
         pass
 print('Deleted {} post(s)'.format(counter_deleted_message))
